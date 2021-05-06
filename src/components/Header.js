@@ -1,5 +1,6 @@
 import { Container, Row, Col, Jumbotron, Button } from 'react-bootstrap';
 import Logo from "../assets/svgs/full-logo.svg";
+import { Link } from "react-router-dom";
 
 function Header() {
     return <div id="header" className="d-flex flex-column">
@@ -8,9 +9,9 @@ function Header() {
             <Col sm={6}><img src={Logo} height="80" alt="logo" /></Col>
             <Col sm={{ offset: 3 }}>
                 <Row className="align-items-center justify-content-center">
-                    <Col className="text-center">Admin</Col>
-                    <Col className="text-center">Test</Col>
-                    <Col className="text-center">Login</Col>
+                    <Col className="text-center"><Link to="/admin" style={{ textDecoration: "none"}}>Admin</Link></Col>
+                    <Col className="text-center"><Link to="/#test" style={{ textDecoration: "none"}}>Test</Link></Col>
+                    <Col className="text-center"><Link to="/#about" style={{ textDecoration: "none"}}>Explore</Link></Col>
                 </Row>
             </Col>
         </Row>

@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 import Home from "./views/Home"
-import Admin from "./views/Admin"
+import AdminView from "./views/AdminView"
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <div>
           <Switch>
             <Route path="/admin">
-              <Admin />
+              <AdminView />
             </Route>
             <Route path="/">
               <Home />

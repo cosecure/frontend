@@ -37,3 +37,9 @@ code {
 .fluid {
   width: 100%;
 }
+
+.admin {
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(to top right, rgb(0, 238, 255), rgb(17, 0, 255));
+}
