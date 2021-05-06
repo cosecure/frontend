@@ -1,0 +1,36 @@
+import { Container, Row, Col, Jumbotron, Button } from 'react-bootstrap';
+import Logo from "../assets/svgs/full-logo.svg";
+
+function Header() {
+    return <div id="header" className="d-flex flex-column">
+        <Container fluid>
+        <Row className="justify-content-md-center align-items-md-center bg-light text-dark">
+            <Col sm={6}><img src={Logo} height="80" alt="logo" /></Col>
+            <Col sm={{ offset: 3 }}>
+                <Row className="align-items-center justify-content-center">
+                    <Col className="text-center">Admin</Col>
+                    <Col className="text-center">Test</Col>
+                    <Col className="text-center">Login</Col>
+                </Row>
+            </Col>
+        </Row>
+        </Container>
+        <div className="d-flex flex-column justify-content-center fluid flex-grow-1 container">
+        <Jumbotron>
+            <h1 className="font-weight-bolder text-primary shadow-effect"><span className="text-blue">Co</span>Secure</h1>
+            <p className="font-weight-bolder">
+                A Machine Learning based Application trained over millions of dataset to predict the covid-19 virus attack
+                <br/>
+                <strong>Test your results now with acurate predictor!</strong>
+            </p>
+            <p>
+                <Button variant="primary" className="m-2">Download</Button>
+                <Button variant="primary" className="m-2">Learn more</Button>
+                <Button variant="outline-primary" className="m-2">Test Now</Button>
+            </p>
+        </Jumbotron>
+        </div>
+    </div>
+}
+
+export default Header;
