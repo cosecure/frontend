@@ -1,23 +1,25 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.9d5b29c0.chunk.css",
-    "main.js": "/frontend/static/js/main.e5606f27.chunk.js",
-    "main.js.map": "/frontend/static/js/main.e5606f27.chunk.js.map",
-    "runtime-main.js": "/frontend/static/js/runtime-main.d9378180.js",
-    "runtime-main.js.map": "/frontend/static/js/runtime-main.d9378180.js.map",
-    "static/js/2.16ce9e39.chunk.js": "/frontend/static/js/2.16ce9e39.chunk.js",
-    "static/js/2.16ce9e39.chunk.js.map": "/frontend/static/js/2.16ce9e39.chunk.js.map",
-    "static/js/3.e898a1b1.chunk.js": "/frontend/static/js/3.e898a1b1.chunk.js",
-    "static/js/3.e898a1b1.chunk.js.map": "/frontend/static/js/3.e898a1b1.chunk.js.map",
+    "main.css": "/frontend/static/css/main.75274a28.chunk.css",
+    "main.js": "/frontend/static/js/main.1cd86164.chunk.js",
+    "main.js.map": "/frontend/static/js/main.1cd86164.chunk.js.map",
+    "runtime-main.js": "/frontend/static/js/runtime-main.076ce67a.js",
+    "runtime-main.js.map": "/frontend/static/js/runtime-main.076ce67a.js.map",
+    "static/css/2.800be05e.chunk.css": "/frontend/static/css/2.800be05e.chunk.css",
+    "static/js/2.3f02bc5a.chunk.js": "/frontend/static/js/2.3f02bc5a.chunk.js",
+    "static/js/2.3f02bc5a.chunk.js.map": "/frontend/static/js/2.3f02bc5a.chunk.js.map",
     "index.html": "/frontend/index.html",
-    "static/css/main.9d5b29c0.chunk.css.map": "/frontend/static/css/main.9d5b29c0.chunk.css.map",
-    "static/js/2.16ce9e39.chunk.js.LICENSE.txt": "/frontend/static/js/2.16ce9e39.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/frontend/static/media/logo.6ce24c58.svg"
+    "static/css/2.800be05e.chunk.css.map": "/frontend/static/css/2.800be05e.chunk.css.map",
+    "static/css/main.75274a28.chunk.css.map": "/frontend/static/css/main.75274a28.chunk.css.map",
+    "static/js/2.3f02bc5a.chunk.js.LICENSE.txt": "/frontend/static/js/2.3f02bc5a.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/frontend/static/media/background-radient.60919d93.png",
+    "static/media/full-logo.0bd7aff8.svg": "/frontend/static/media/full-logo.0bd7aff8.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.d9378180.js",
-    "static/js/2.16ce9e39.chunk.js",
-    "static/css/main.9d5b29c0.chunk.css",
-    "static/js/main.e5606f27.chunk.js"
+    "static/js/runtime-main.076ce67a.js",
+    "static/css/2.800be05e.chunk.css",
+    "static/js/2.3f02bc5a.chunk.js",
+    "static/css/main.75274a28.chunk.css",
+    "static/js/main.1cd86164.chunk.js"
   ]
 }
