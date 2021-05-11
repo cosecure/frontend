@@ -1,4 +1,5 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 function Body() {
     return <div className="body m-4">
@@ -9,7 +10,12 @@ function Body() {
             <p className="lead">CoSecure is Android Application where user can login and check their chances of covid-19 virus attack based on the body situation. We will take the user data of body temperature, beats per minute, spO2 level, taste sensitive, sneeze, headache, throat soar, cough and if they contacted with covid-19 positive patient. And then we inform the user the chances of virus affected. The prediction is purely based on Machine Learning model that is trained based on the covid-19 test reports of thousands users. If the chances of the user is really high then user can consult the doctor via chat in our application.</p>
         </Container>
         <br/>
-        <Container className="alert alert-success p-4 text-justify" id="test">
+        <Container className="alert alert-info p-4 text-justify mb-4" id="about">
+            <h2 className="mb-4 mt-4">help Us!</h2>
+            <p className="lead">Since our Application is based on Users Covid test report, help us by adding your test report to enhance our machine learning model prediction</p>
+            <Link to="/add-dataset" style={{ textDecoration: "none"}}>Add Your Test Report</Link>
+        </Container>
+        <Container className="alert alert-success p-4 text-justify">
             <Row>
                 <Col md={6} sm={12}>
                     <div className="container">

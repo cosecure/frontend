@@ -7,6 +7,7 @@ import {
 import Home from "./views/Home"
 import AdminView from "./views/AdminView"
 import AdminPage from "./views/AdminPage"
+import AddPage from "./views/AddPage"
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
       <Router>
         <div>
           <Switch>
+            <Route path="/add-dataset">
+              <AddPage />
+            </Route>
             <Route path="/admin-page">
               <AdminPage />
             </Route>
