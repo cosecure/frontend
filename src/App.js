@@ -6,6 +6,7 @@ import {
 
 import Home from "./views/Home"
 import AdminView from "./views/AdminView"
+import AdminPage from "./views/AdminPage"
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
       <Router>
         <div>
           <Switch>
+            <Route path="/admin-page">
+              <AdminPage />
+            </Route>
             <Route path="/admin">
               <AdminView />
             </Route>

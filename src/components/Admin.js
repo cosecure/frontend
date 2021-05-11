@@ -2,6 +2,8 @@ import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/svgs/full-logo-shadow.svg";
+import axios from "axios";
+import {url} from "../utils/url"
 
 class Admin extends Component {
 
@@ -13,6 +15,18 @@ class Admin extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        axios.post(url + "/rest-auth/login/", 
+            { username: "admin", password: this.state.password }
+        )
+        .then(res => {
+            if (res.data.key) {
+                localStorage.setItem("token", res.data.key);
+                window.location.href = "/admin-page"
+            }
+        })
+        .catch(err => {
+            console.log("error login")
+        })
     };
 
     render() {
