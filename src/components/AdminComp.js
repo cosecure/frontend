@@ -80,7 +80,7 @@ class AdminComp extends Component {
     }
 
     handleChangeFieldFactor = () => {
-        axios.post(url+"/ml_model/dataset/change-factor/", { field: this.state.field, value: this.state.value }, {
+        axios.post(url+"/ml_model/dataset/change-factor/", { field: this.state.field, value: parseFloat(this.state.value) }, {
             headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
             }
