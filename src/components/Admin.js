@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import logo from "../assets/svgs/full-logo-shadow.svg";
 import axios from "axios";
 import {url} from "../utils/url"
@@ -9,7 +9,8 @@ class Admin extends Component {
 
     state = {
         email: "",
-        password: ""
+        password: "",
+        credits: false,
     };
 
     handleSubmit = (e) => {
@@ -19,10 +20,9 @@ class Admin extends Component {
             { username: "admin", password: this.state.password }
         )
         .then(res => {
-            if (res.data.key) {
-                localStorage.setItem("token", res.data.key);
-                window.location.href = "/admin-page"
-            }
+            localStorage.setItem("token", res.data.key);
+            console.log(res.data.key);
+            this.setState({ credits: true });
         })
         .catch(err => {
             console.log("error login")
@@ -30,6 +30,8 @@ class Admin extends Component {
     };
 
     render() {
+        if (this.state.credits) return (<Redirect to='/admin-page' />);
+
         return <div className="admin">
         <div className="container pt-4">
         <Card border="primary" style={{ width: '100%' }}>
@@ -71,4 +73,4 @@ class Admin extends Component {
     }
 }
 
-export default Admin;
+export default withRouter(Admin);

@@ -1,7 +1,79 @@
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import axios from "axios";
+import {url} from "../utils/url"
 
-function Body() {
+class Body extends Component {
+    state = {
+        temperature: null,
+        bpm: null, 
+        age: null, 
+        gender: null,
+        taste_sensitive: null,
+        shortness_of_breath: null,
+        sneeze: null,
+        headache: null, 
+        throat_soar: null, 
+        cough: null, 
+        spO2: null,
+        contact_with_positive_person: null, 
+        result: null,
+        accurary: null,
+    };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state);
+        let bdy = {
+            temperature: null,
+            bpm: null, 
+            age: null, 
+            gender: null,
+            taste_sensitive: null,
+            shortness_of_breath: null,
+            sneeze: null,
+            headache: null, 
+            throat_soar: null, 
+            cough: null, 
+            spO2: null,
+            contact_with_positive_person: null, 
+            result: null
+        };
+        bdy.temperature = parseFloat(this.state.temperature);
+        bdy.bpm = parseInt(this.state.bpm);
+        bdy.age = parseInt(this.state.age);
+        bdy.gender = parseInt(this.state.gender);
+        bdy.taste_sensitive = parseInt(this.state.taste_sensitive);
+        bdy.shortness_of_breath = parseFloat(this.state.shortness_of_breath);
+        bdy.sneeze = parseInt(this.state.sneeze);
+        bdy.headache = parseFloat(this.state.headache);
+        bdy.throat_soar = parseFloat(this.state.throat_soar);
+        bdy.cough = parseInt(this.state.cough);
+        bdy.spO2 = parseInt(this.state.spO2);
+        bdy.contact_with_positive_person = parseFloat(this.state.contact_with_positive_person);
+        bdy.result = parseInt(this.state.result);
+
+        console.log(bdy);
+
+        axios.post(url + "/ml_model/predict/",
+            bdy
+        )
+        .then(res => {
+            this.setState({result: res.data.prediction});
+        })
+        .catch(err => {
+            console.log("error sending data")
+        });
+
+        axios.get(url + "/ml_model/dataset/accuracy/")
+        .then(res => {
+            this.setState({accurary: res.data.accurary});
+        })
+        .catch(err => {
+            console.log("error sending data")
+        })
+    }
+    render() {
     return <div className="body m-4">
         <Container className="alert alert-primary p-4 text-justify" id="about">
             <h2 className="mb-4 mt-4">About CoSecure</h2>
@@ -28,23 +100,67 @@ function Body() {
                 </Col>
                 <Col md={6} sm={12} className="alert alert-success text-justify">
                 <Form>
-                    <h2 className="test-sucess">Predict your test</h2>
-                    <Form.Group>
+                    <h2 className="text-primary text-left text-center">Enter the Report Data</h2>
+                    <Form.Group className="m-4">
                         <Form.Label>Temperature</Form.Label>
-                        <Form.Control type="number" placeholder="Enter your body temperture" />
+                        <Form.Control type="number" placeholder="Enter the body Temperature" onChange={(e) => this.setState({ temperature: e.target.value})}/>
                     </Form.Group>
-                    <Form.Group className="mt-3">
+                    <div class="m-4 form-group">
+                        <label class="form-label">Headache</label>
+                        <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.headache} onChange={(e) => { this.setState({ headache: e.target.value}) }}>
+                        <option value="" selected disabled>Please select</option>
+                        <option value="0">No Headache</option>
+                        <option value="0.5">Mild Headache</option>
+                        <option value="1">Heavy Headache</option>
+                        </Form.Control>
+                    </div>
+                    <div class="m-4 form-group">
+                        <label class="form-label">Soar Throad</label>
+                        <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.throat_soar} onChange={(e) => { this.setState({ throat_soar: e.target.value}) }}>
+                        <option value="" selected disabled>Please select</option>
+                        <option value="0">No Soar Throad</option>
+                        <option value="0.5">Mild Soar Throad</option>
+                        <option value="1">Heavy Soar Throad</option>
+                        </Form.Control>
+                    </div>
+                    <div class="m-4 form-group">
+                        <label class="form-label">Breathlessness</label>
+                        <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.shortness_of_breath} onChange={(e) => { this.setState({ shortness_of_breath: e.target.value}) }}>
+                        <option value="" selected disabled>Please select</option>
+                        <option value="0">Normal</option>
+                        <option value="0.5">Mild</option>
+                        <option value="1">Critical</option>
+                        </Form.Control>
+                    </div>
+                    <div class="m-4 form-group">
+                        <label class="form-label">Contact Status</label>
+                        <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.contact_with_positive_person} onChange={(e) => { this.setState({ contact_with_positive_person: e.target.value}) }}>
+                        <option value="" selected disabled>Please select</option>
+                        <option value="0">No Contact with Covid person</option>
+                        <option value="0.5">Came from Abroad</option>
+                        <option value="1">Contacted covid person</option>
+                        </Form.Control>
+                    </div>
+                    <Form.Group className="m-4">
                         <Form.Label>Beats per minute</Form.Label>
-                        <Form.Control type="number" placeholder="Enter your heart's beats per minute" />
+                        <Form.Control type="number" placeholder="Enter the bpm" onChange={(e) => this.setState({ bpm: e.target.value})}/>
                     </Form.Group>
-                    <Button variant="primary" className="mt-4 fluid" block>
-                        Predict test
+                    <Form.Group className="m-4">
+                        <Form.Label>spO2 Level</Form.Label>
+                        <Form.Control type="number" placeholder="Enter the O2 saturation Level" onChange={(e) => this.setState({ spO2: e.target.value})}/>
+                    </Form.Group>
+                    <Button variant="primary" type="submit" onClick={this.handleSubmit} className="m-4" style={{ width: "90%"}}>
+                        Check Report
                     </Button>
-                </Form>
+                    {
+                        (this.state.result) ? (<p>Prediction is {this.state.result}% - accurary is {this.state.accurary}</p>) : null
+                    }
+                    </Form>
                 </Col>
             </Row>
         </Container>
     </div>
+    }
 }
 
 export default Body;
