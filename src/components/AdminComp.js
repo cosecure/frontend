@@ -15,6 +15,7 @@ class AdminComp extends Component {
            field: null,
            value: 0,
            attrFactor: null,
+           isLoading: false,
         };
 
         if (!this.state.token) {
@@ -23,15 +24,18 @@ class AdminComp extends Component {
     }
 
     componentDidMount() {
+        this.setState({ isLoading: true});
         axios.get(url+"/ml_model/dataset/get-factor/", {
             headers: { Authorization: `Token ${localStorage.getItem("token")}` }
         })
         .then(res => {
             console.log(res.data);
             this.setState({ attrFactor: res.data });
+            this.setState({ isLoading: false});
         })
         .catch(err => {
             console.log("error fetching dataset");
+            this.setState({ isLoading: false});
         })
 
         axios.get(url+"/ml_model/dataset/list/", {
@@ -41,13 +45,16 @@ class AdminComp extends Component {
             console.log(res.data);
             this.setState({ dataset: res.data });
             console.log(this.state)
+            this.setState({ isLoading: false});
         })
         .catch(err => {
             console.log("error fetching dataset");
+            this.setState({ isLoading: false});
         })
     }
 
     handleCSVDownload = () => {
+        this.setState({ isLoading: true});
         axios.get(url+"/ml_model/dataset/download/", {
             responseType: 'blob',
             headers: { 
@@ -62,9 +69,13 @@ class AdminComp extends Component {
         .catch(err => {
             console.log("error fetching dataset");
         })
+        .finally(() => {
+            this.setState({ isLoading: false});
+        })
     }
 
     handleChangedataset = () => {
+        this.setState({ isLoading: true});
         axios.post(url+"/ml_model/dataset/change/", { dataset: this.state.datasetSelect }, {
             headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
@@ -77,9 +88,13 @@ class AdminComp extends Component {
         .catch(err => {
             console.log("error fetching dataset");
         })
+        .finally(() => {
+            this.setState({ isLoading: false});
+        })
     }
 
     handleChangeFieldFactor = () => {
+        this.setState({ isLoading: true});
         axios.post(url+"/ml_model/dataset/change-factor/", { field: this.state.field, value: parseFloat(this.state.value) }, {
             headers: {
                 Authorization: `Token ${localStorage.getItem("token")}`,
@@ -92,10 +107,18 @@ class AdminComp extends Component {
         .catch(err => {
             console.log("error fetching dataset");
         })
+        .finlly(()=> {
+            this.setState({ isLoading: false});
+        })
     }
 
     render() {
         return <div>
+            {
+            this.state.isLoading ?
+                (<div class="spinner"><div class="lds-hourglass"></div></div>):
+                (<div></div>)
+        }
             <h2>Welcome Admin, Lucky YOU</h2>
             <Container>
             <Button variant="info" type="submit" onClick={this.handleCSVDownload} className="m-4" style={{ width: "90%"}}>Download CSV</Button>

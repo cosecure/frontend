@@ -11,10 +11,12 @@ class Admin extends Component {
         email: "",
         password: "",
         credits: false,
+        isLoading: false,
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState({ isLoading: true});
         console.log(this.state);
         axios.post(url + "/rest-auth/login/", 
             { username: "admin", password: this.state.password }
@@ -23,9 +25,11 @@ class Admin extends Component {
             localStorage.setItem("token", res.data.key);
             console.log(res.data.key);
             this.setState({ credits: true });
+            this.setState({ isLoading: false});
         })
         .catch(err => {
             console.log("error login")
+            this.setState({ isLoading: false});
         })
     };
 
@@ -33,6 +37,11 @@ class Admin extends Component {
         if (this.state.credits) return (<Redirect to='/admin-page' />);
 
         return <div className="admin">
+            {
+            this.state.isLoading ?
+                (<div class="spinner"><div class="lds-hourglass"></div></div>):
+                (<div></div>)
+        }
         <div className="container pt-4">
         <Card border="primary" style={{ width: '100%' }}>
             <Card.Body>

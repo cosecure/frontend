@@ -10,8 +10,8 @@ function Header() {
             <Col sm={{ offset: 3 }}>
                 <Row className="align-items-center justify-content-center">
                     <Col className="text-center"><Link to="/admin" style={{ textDecoration: "none"}}>Admin</Link></Col>
-                    <Col className="text-center"><Link to="/#test" style={{ textDecoration: "none"}}>Test</Link></Col>
-                    <Col className="text-center"><Link to="/#about" style={{ textDecoration: "none"}}>Explore</Link></Col>
+                    <Col className="text-center"><span  onClick={() => window.scrollTo(0, 1400)} style={{ textDecoration: "none"}}>Test</span></Col>
+                    <Col className="text-center"><span onClick={() => window.scrollTo(0, 600)} style={{ textDecoration: "none"}}>Explore</span></Col>
                 </Row>
             </Col>
         </Row>
@@ -25,9 +25,8 @@ function Header() {
                 <strong>Test your results now with acurate predictor!</strong>
             </p>
             <p>
-                <Button variant="primary" className="m-2">Download</Button>
-                <Button variant="primary" className="m-2">Learn more</Button>
-                <Button variant="outline-primary" className="m-2">Test Now</Button>
+                <Button variant="primary" onClick={() => window.scrollTo(0, 600)}>Learn more</Button>
+                <Button variant="outline-primary" onClick={() => window.scrollTo(0, 1400)} className="m-2">Test Now</Button>
             </p>
         </Jumbotron>
         </div>

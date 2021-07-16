@@ -20,23 +20,25 @@ class Body extends Component {
         contact_with_positive_person: null, 
         result: null,
         accurary: null,
+        isLoading: false,
     };
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState({ isLoading: true});
         console.log(this.state);
         let bdy = {
-            temperature: null,
-            bpm: null, 
+            temperature: 100,
+            bpm: 60, 
             age: null, 
             gender: null,
-            taste_sensitive: null,
-            shortness_of_breath: null,
-            sneeze: null,
-            headache: null, 
-            throat_soar: null, 
-            cough: null, 
-            spO2: null,
-            contact_with_positive_person: null, 
+            taste_sensitive: 0,
+            shortness_of_breath: 0,
+            sneeze: 0,
+            headache: 0, 
+            throat_soar: 0, 
+            cough: 0, 
+            spO2: 97,
+            contact_with_positive_person: 0, 
             result: null
         };
         bdy.temperature = parseFloat(this.state.temperature);
@@ -59,10 +61,15 @@ class Body extends Component {
             bdy
         )
         .then(res => {
-            this.setState({result: res.data.prediction});
+            let prid = parseFloat(res.data.prediction) > 100 ? "100": parseFloat(res.data.prediction);
+            prid = prid < 0 ? "0" : prid;
+            this.setState({result: prid});
         })
         .catch(err => {
             console.log("error sending data")
+        })
+        .finally(() => {
+            this.setState({ isLoading: false});
         });
 
         axios.get(url + "/ml_model/dataset/accuracy/")
@@ -72,9 +79,17 @@ class Body extends Component {
         .catch(err => {
             console.log("error sending data")
         })
+        .finally(() => {
+            this.setState({ isLoading: false});
+        });
     }
     render() {
     return <div className="body m-4">
+        {
+            this.state.isLoading ?
+                (<div class="spinner"><div class="lds-hourglass"></div></div>):
+                (<div></div>)
+        }
         <Container className="alert alert-primary p-4 text-justify" id="about">
             <h2 className="mb-4 mt-4">About CoSecure</h2>
             <p className="lead">Since COVID pandemic is again getting peak and uncontrollable, people are not confirm with their symptoms against covid-19 virus, so we across an idea of predicting the user’s covid-19 virus attack based on their body temperature, beats per minute, spO2 level, taste sensitive, sneeze, headache, throat soar, cough and if they contacted with covid-19 positive patient. We will inform the user the changes that he/she is effected based on the previous data of covid-19 patients.</p>
@@ -95,20 +110,19 @@ class Body extends Component {
                         <p className="lead">
                             This is just a basic prediction trained over 100 dataset, Download the Official application for actual prediction of the covid-19 virus
                         </p>
-                        <Button variant="outline-success" className="m-2">Download the Android App</Button>
                     </div>
                 </Col>
                 <Col md={6} sm={12} className="alert alert-success text-justify">
-                <Form>
+                <Form  onSubmit={this.handleSubmit}>
                     <h2 className="text-primary text-left text-center">Enter the Report Data</h2>
                     <Form.Group className="m-4">
                         <Form.Label>Temperature</Form.Label>
-                        <Form.Control type="number" placeholder="Enter the body Temperature" onChange={(e) => this.setState({ temperature: e.target.value})}/>
+                        <Form.Control type="number" placeholder="Enter the body Temperature" onChange={(e) => this.setState({ temperature: e.target.value})} required min="97" max="105" />
                     </Form.Group>
                     <div class="m-4 form-group">
                         <label class="form-label">Headache</label>
                         <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.headache} onChange={(e) => { this.setState({ headache: e.target.value}) }}>
-                        <option value="" selected disabled>Please select</option>
+                        <option value="0" selected disabled>Please select</option>
                         <option value="0">No Headache</option>
                         <option value="0.5">Mild Headache</option>
                         <option value="1">Heavy Headache</option>
@@ -117,7 +131,7 @@ class Body extends Component {
                     <div class="m-4 form-group">
                         <label class="form-label">Soar Throad</label>
                         <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.throat_soar} onChange={(e) => { this.setState({ throat_soar: e.target.value}) }}>
-                        <option value="" selected disabled>Please select</option>
+                        <option value="0" selected disabled>Please select</option>
                         <option value="0">No Soar Throad</option>
                         <option value="0.5">Mild Soar Throad</option>
                         <option value="1">Heavy Soar Throad</option>
@@ -126,7 +140,7 @@ class Body extends Component {
                     <div class="m-4 form-group">
                         <label class="form-label">Breathlessness</label>
                         <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.shortness_of_breath} onChange={(e) => { this.setState({ shortness_of_breath: e.target.value}) }}>
-                        <option value="" selected disabled>Please select</option>
+                        <option value="0" selected disabled>Please select</option>
                         <option value="0">Normal</option>
                         <option value="0.5">Mild</option>
                         <option value="1">Critical</option>
@@ -135,7 +149,7 @@ class Body extends Component {
                     <div class="m-4 form-group">
                         <label class="form-label">Contact Status</label>
                         <Form.Control as="select" custom style={{ width: '100%', height: '36px'}} value={this.state.contact_with_positive_person} onChange={(e) => { this.setState({ contact_with_positive_person: e.target.value}) }}>
-                        <option value="" selected disabled>Please select</option>
+                        <option value="0" selected disabled>Please select</option>
                         <option value="0">No Contact with Covid person</option>
                         <option value="0.5">Came from Abroad</option>
                         <option value="1">Contacted covid person</option>
@@ -143,13 +157,13 @@ class Body extends Component {
                     </div>
                     <Form.Group className="m-4">
                         <Form.Label>Beats per minute</Form.Label>
-                        <Form.Control type="number" placeholder="Enter the bpm" onChange={(e) => this.setState({ bpm: e.target.value})}/>
+                        <Form.Control min="45" max="140" type="number" placeholder="Enter the bpm" required onChange={(e) => this.setState({ bpm: e.target.value})}/>
                     </Form.Group>
                     <Form.Group className="m-4">
                         <Form.Label>spO2 Level</Form.Label>
-                        <Form.Control type="number" placeholder="Enter the O2 saturation Level" onChange={(e) => this.setState({ spO2: e.target.value})}/>
+                        <Form.Control min="60" max="100" type="number" placeholder="Enter the O2 saturation Level" required onChange={(e) => this.setState({ spO2: e.target.value})}/>
                     </Form.Group>
-                    <Button variant="primary" type="submit" onClick={this.handleSubmit} className="m-4" style={{ width: "90%"}}>
+                    <Button variant="primary" type="submit" className="m-4" style={{ width: "90%"}}>
                         Check Report
                     </Button>
                     {

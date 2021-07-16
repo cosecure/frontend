@@ -20,11 +20,13 @@ class AddDatasetPage extends Component {
         cough: null, 
         spO2: null,
         contact_with_positive_person: null, 
-        result: null
+        result: null,
+        isLoading: false,
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
+        this.setState({ isLoading: true});
         let bdy = {
             temperature: null,
             bpm: null, 
@@ -60,15 +62,25 @@ class AddDatasetPage extends Component {
             bdy
         )
         .then(res => {
-            console.log(res.data)
+            console.log(res.data);
+            alert("added succesfully");
         })
         .catch(err => {
             console.log("error sending data")
+            alert("Not able to add report");
+        })
+        .finally(()=> {
+            this.setState({ isLoading: false});
         })
     };
 
     render() {
         return <div className="admin">
+            {
+            this.state.isLoading ?
+                (<div class="spinner"><div class="lds-hourglass"></div></div>):
+                (<div></div>)
+        }
         <div className="container pt-4">
         <Card border="primary" style={{ width: '100%' }}>
             <Card.Body>
@@ -85,15 +97,15 @@ class AddDatasetPage extends Component {
                     </Col>
                     <Col sm={12} md={6}>
                         <div className="container">
-                        <Form>
+                        <Form  onSubmit={this.handleSubmit}>
                         <h2 className="text-primary text-left text-center">Enter the Report Data</h2>
                         <Form.Group className="m-4">
                             <Form.Label>Temperature</Form.Label>
-                            <Form.Control type="number" placeholder="Enter the body Temperature" onChange={(e) => this.setState({ temperature: e.target.value})}/>
+                            <Form.Control type="number" required min="96" max="105" placeholder="Enter the body Temperature" onChange={(e) => this.setState({ temperature: e.target.value})}/>
                         </Form.Group>
                         <Form.Group className="m-4">
                             <Form.Label>Age</Form.Label>
-                            <Form.Control type="number" placeholder="Enter the Age" onChange={(e) => this.setState({ age: e.target.value})}/>
+                            <Form.Control type="number" required min="1" max="105"  placeholder="Enter the Age" onChange={(e) => this.setState({ age: e.target.value})}/>
                         </Form.Group>
                         <div class="m-4 form-group">
                             <label class="form-label">Gender</label>
@@ -169,11 +181,11 @@ class AddDatasetPage extends Component {
                         </div>
                         <Form.Group className="m-4">
                             <Form.Label>Beats per minute</Form.Label>
-                            <Form.Control type="number" placeholder="Enter the bpm" onChange={(e) => this.setState({ bpm: e.target.value})}/>
+                            <Form.Control required min="40" max="125"  type="number" placeholder="Enter the bpm" onChange={(e) => this.setState({ bpm: e.target.value})}/>
                         </Form.Group>
                         <Form.Group className="m-4">
                             <Form.Label>spO2 Level</Form.Label>
-                            <Form.Control type="number" placeholder="Enter the O2 saturation Level" onChange={(e) => this.setState({ spO2: e.target.value})}/>
+                            <Form.Control required min="60" max="100"  type="number" placeholder="Enter the O2 saturation Level" onChange={(e) => this.setState({ spO2: e.target.value})}/>
                         </Form.Group>
                         <div class="m-4 form-group">
                             <label class="form-label">Report Status</label>
@@ -183,7 +195,7 @@ class AddDatasetPage extends Component {
                             <option value="1">Tested covid positive</option>
                             </Form.Control>
                         </div>
-                        <Button variant="primary" type="submit" onClick={this.handleSubmit} className="m-4" style={{ width: "90%"}}>
+                        <Button variant="primary" type="submit" className="m-4" style={{ width: "90%"}}>
                             Add Report
                         </Button>
                         </Form>
